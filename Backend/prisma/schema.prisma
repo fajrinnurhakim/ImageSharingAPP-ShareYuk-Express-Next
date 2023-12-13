@@ -10,21 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
+model User {
   id        Int       @id @default(autoincrement())
   name      String
-  email     String
+  email     String    @unique
   password  String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  SharePhotos SharePhotos[]
+  Share Share[]
 }
 
-model SharePhotos {
+model Share {
   id        Int       @id @default(autoincrement())
-  Image     String
-  users_id  Int
+  image     String
+  caption   String
+  user_id  Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
-  Users     Users     @relation(fields: [users_id], references: [id], onDelete: Cascade)
+  User     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
