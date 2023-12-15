@@ -109,6 +109,20 @@ app.get("/shares", async (req, res) => {
     res.json({ shares });
 });
 
+app.get("/shares", authenticateTokenMiddleware, async (req, res) => {
+    try {
+        const shares = await prisma.share.findMany({
+            where: {
+                user_id: req.user_id,
+            },
+        });
+        res.json({ shares });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 app.put("/shares/:id", authenticateTokenMiddleware, async (req, res) => {
     try {
         const { id } = req.params;
