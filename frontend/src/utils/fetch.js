@@ -72,6 +72,25 @@ export const getShares = async () => {
     }
 };
 
+export const getSharess = async () => {
+    const token = Cookies.get("token");
+    try {
+        const response = await axios.get("http://localhost:3000/sharess", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error...",
+            text: `Error while fetching shares: ${error}`,
+        });
+    }
+};
+
 export const getShareById = async (id) => {
     const token = Cookies.get("token");
     try {

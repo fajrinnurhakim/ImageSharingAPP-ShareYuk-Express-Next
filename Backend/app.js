@@ -109,7 +109,7 @@ app.get("/shares", async (req, res) => {
     res.json({ shares });
 });
 
-app.get("/shares", authenticateTokenMiddleware, async (req, res) => {
+app.get("/sharess", authenticateTokenMiddleware, async (req, res) => {
     try {
         const shares = await prisma.share.findMany({
             where: {

@@ -1,9 +1,50 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import DashboardShare from "./pages/dashboard";
+import LoginRoute from "./routes/auth";
+
 function App() {
     return (
         <>
-            <div>
-                <h1 className="text-3xl font-bold underline">Hello world!</h1>
-            </div>
+            <Router>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Login />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/register"
+                        element={
+                            <>
+                                <Register />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/home"
+                        element={
+                            <>
+                                <home />
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <>
+                                <LoginRoute>
+                                    <DashboardShare />
+                                </LoginRoute>
+                            </>
+                        }
+                    />
+                </Routes>
+            </Router>
         </>
     );
 }
