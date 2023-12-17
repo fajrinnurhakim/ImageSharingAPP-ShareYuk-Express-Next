@@ -3,6 +3,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import DashboardShare from "./pages/dashboard";
 import LoginRoute from "./routes/auth";
+import Beranda from "./pages/beranda";
 
 function App() {
     return (
@@ -39,6 +40,16 @@ function App() {
                             <>
                                 <LoginRoute>
                                     <DashboardShare />
+                                </LoginRoute>
+                            </>
+                        }
+                    />
+                    <Route
+                        path="/beranda"
+                        element={
+                            <>
+                                <LoginRoute>
+                                    <Beranda />
                                 </LoginRoute>
                             </>
                         }

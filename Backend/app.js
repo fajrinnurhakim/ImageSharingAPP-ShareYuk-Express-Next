@@ -74,7 +74,12 @@ app.post("/login", async (req, res) => {
         if (!passwordMatch) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+        const tokenPayload = {
+            userId: user.id,
+            userName: user.name,
+        };
+
+        const token = jwt.sign(tokenPayload, process.env.JWT_SECRET);
         res.json({ token });
     } catch (err) {
         console.log(err);
@@ -104,16 +109,21 @@ app.post(
     }
 );
 
-app.get("/shares", async (req, res) => {
-    const shares = await prisma.share.findMany();
-    res.json({ shares });
+app.get("/shares", authenticateTokenMiddleware, async (req, res) => {
+    try {
+        const shares = await prisma.share.findMany();
+        res.json({ shares });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
 
 app.get("/sharess", authenticateTokenMiddleware, async (req, res) => {
     try {
         const shares = await prisma.share.findMany({
             where: {
-                user_id: req.user_id,
+                user_id: req.userId,
             },
         });
         res.json({ shares });

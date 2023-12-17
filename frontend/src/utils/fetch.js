@@ -143,20 +143,16 @@ export const createShare = async (caption, image) => {
     }
 };
 
-export const updateShare = async (id, caption, image) => {
+export const updateShare = async (id, caption) => {
     const token = Cookies.get("token");
     try {
-        const formData = new FormData();
-        formData.append("caption", caption);
-        formData.append("image", image);
-
         const response = await axios.put(
             `http://localhost:3000/shares/${id}`,
-            formData,
+            { caption },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                 },
             }
         );
@@ -166,6 +162,7 @@ export const updateShare = async (id, caption, image) => {
             title: "Success...",
             text: "Update Share Successfully!",
         });
+
         return response.data;
     } catch (error) {
         Swal.fire({

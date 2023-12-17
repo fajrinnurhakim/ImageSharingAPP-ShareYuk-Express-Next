@@ -6,6 +6,7 @@ import {
     deleteShare,
     getSharess,
 } from "../../utils/fetch";
+import NavbarTop from "../../components/NavbarTop";
 
 const DashboardShare = () => {
     const [shares, setShares] = useState([]);
@@ -40,8 +41,15 @@ const DashboardShare = () => {
 
     const handleUpdateShare = async (id) => {
         try {
-            await updateShare(id, caption, image);
-            fetchShares();
+            const updatedCaption = prompt(
+                "Enter the updated caption:",
+                caption
+            );
+
+            if (updatedCaption !== null) {
+                await updateShare(id, updatedCaption, image);
+                fetchShares();
+            }
         } catch (error) {
             console.error("Error updating share", error);
         }
@@ -58,81 +66,95 @@ const DashboardShare = () => {
 
     return (
         <div>
-            <h1 className="mb-4 text-3xl font-bold">Share Dashboard</h1>
-            <div className="p-4 mb-4 border border-gray-300 rounded">
-                <h2 className="mb-2 text-xl font-bold">Create New Share</h2>
-                <label className="block mb-2" htmlFor="caption">
-                    Caption:
-                    <input
-                        type="text"
-                        id="caption"
-                        value={caption}
-                        onChange={(e) => setCaption(e.target.value)}
-                        className="w-full p-2 border border-gray-300"
-                    />
-                </label>
-                <label className="block mb-2" htmlFor="image">
-                    Image:
-                    <input
-                        type="file"
-                        id="image"
-                        onChange={(e) => setImage(e.target.files[0])}
-                        className="w-full p-2 border border-gray-300"
-                    />
-                </label>
-                <button
-                    onClick={handleCreateShare}
-                    className="px-4 py-2 text-white bg-blue-500 rounded"
-                >
-                    Create Share
-                </button>
-            </div>
+            <NavbarTop />
+            <div className="p-5">
+                <h1 className="mb-4 text-3xl font-bold">Share Dashboard</h1>
+                <div className="p-4 mb-4 border border-gray-300 rounded">
+                    <h2 className="mb-2 text-xl font-bold">Create New Share</h2>
+                    <label className="block mb-2" htmlFor="caption">
+                        Caption:
+                        <input
+                            type="text"
+                            id="caption"
+                            value={caption}
+                            onChange={(e) => setCaption(e.target.value)}
+                            className="w-full p-2 border border-gray-300"
+                        />
+                    </label>
+                    <label className="block mb-2" htmlFor="image">
+                        Image:
+                        <input
+                            type="file"
+                            id="image"
+                            onChange={(e) => setImage(e.target.files[0])}
+                            className="w-full p-2 border border-gray-300"
+                        />
+                    </label>
+                    <button
+                        onClick={handleCreateShare}
+                        className="px-4 py-2 text-white bg-blue-500 rounded"
+                    >
+                        Create Share
+                    </button>
+                </div>
 
-            <div>
-                <h2 className="mb-2 text-xl font-bold">Shares</h2>
-                <table className="w-full border border-gray-300">
-                    <thead>
-                        <tr>
-                            <th className="p-2 border border-gray-300">ID</th>
-                            <th className="p-2 border border-gray-300">
-                                Caption
-                            </th>
-                            <th className="p-2 border border-gray-300">
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {shares.map((share) => (
-                            <tr key={share.id}>
-                                <td className="p-2 border border-gray-300">
-                                    {share.id}
-                                </td>
-                                <td className="p-2 border border-gray-300">
-                                    {share.caption}
-                                </td>
-                                <td className="p-2 border border-gray-300">
-                                    <button
-                                        onClick={() =>
-                                            handleUpdateShare(share.id)
-                                        }
-                                        className="px-2 py-1 mr-2 text-white bg-green-500 rounded"
-                                    >
-                                        Update
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            handleDeleteShare(share.id)
-                                        }
-                                        className="px-2 py-1 text-white bg-red-500 rounded"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
+                <div>
+                    <h2 className="mb-2 text-xl font-bold">Shares</h2>
+                    <table className="w-full border border-gray-300">
+                        <thead>
+                            <tr>
+                                <th className="p-2 border border-gray-300">
+                                    No
+                                </th>
+                                <th className="p-2 border border-gray-300">
+                                    Image
+                                </th>
+                                <th className="p-2 border border-gray-300">
+                                    Caption
+                                </th>
+                                <th className="p-2 border border-gray-300">
+                                    Actions
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {shares.map((share, index) => (
+                                <tr key={share.id}>
+                                    <td className="p-2 border border-gray-300">
+                                        {index + 1}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <img
+                                            src={`http://localhost:3000/${share.image}`}
+                                            className="w-10"
+                                        />
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        {share.caption}
+                                    </td>
+                                    <td className="p-2 border border-gray-300">
+                                        <button
+                                            onClick={() =>
+                                                handleUpdateShare(share.id)
+                                            }
+                                            className="px-2 py-1 mr-2 text-white bg-green-500 rounded"
+                                        >
+                                            Update
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleDeleteShare(share.id)
+                                            }
+                                            className="px-2 py-1 text-white bg-red-500 rounded"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
