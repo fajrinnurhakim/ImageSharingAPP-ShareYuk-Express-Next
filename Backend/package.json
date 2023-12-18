@@ -13,7 +13,7 @@
         "prisma": "^5.7.0"
     },
     "scripts": {
-        "start": "nodemon app.js",
+        "dev": "node app.js",
         "migrate": "npx prisma migrate dev --name init"
     }
 }
