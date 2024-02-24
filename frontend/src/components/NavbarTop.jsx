@@ -20,12 +20,8 @@ const NavbarTop = () => {
         <div>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                    <div className="dropdown">
-                        <div
-                            tabIndex="0"
-                            role="button"
-                            className="btn btn-ghost btn-circle"
-                        >
+                    <details class="dropdown">
+                        <summary class="m-1 btn">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-5 h-5"
@@ -40,11 +36,8 @@ const NavbarTop = () => {
                                     d="M4 6h16M4 12h16M4 18h7"
                                 />
                             </svg>
-                        </div>
-                        <ul
-                            tabIndex="0"
-                            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                        >
+                        </summary>
+                        <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                             <li>
                                 <a href="/beranda">Beranda</a>
                             </li>
@@ -52,7 +45,7 @@ const NavbarTop = () => {
                                 <a href="/dashboard">Dashboard</a>
                             </li>
                         </ul>
-                    </div>
+                    </details>
                 </div>
                 <div className="navbar-center">
                     <a className="text-xl btn btn-ghost">ShareYuk</a>
